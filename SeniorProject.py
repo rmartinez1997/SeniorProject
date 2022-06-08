@@ -18,7 +18,7 @@ message = client.messages \
          from_='+14784296043',
          to='+13235097091'
      )
-# Print out the first 5 pacets
+# Print out the first 5 packets
 # if __name__=="main":
 #      print("hello")
 #      print(sniff())

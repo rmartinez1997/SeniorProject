@@ -6,4 +6,8 @@ def deviceInfo(ipAddress):
     nm.scan(ipAddress, arguments='-Pn -O -sV -A')
     return (nm.csv())
 # You can change this IP to anything for now
-print(deviceInfo('192.168.1.93'))
+def prettyString(dInfo):
+    #TODO 
+    #Ricardo
+    
+print(deviceInfo('192.168.1.223'))

@@ -9,5 +9,7 @@ def deviceInfo(ipAddress):
 def prettyString(dInfo):
     #TODO 
     #Ricardo
-    
-print(deviceInfo('192.168.1.223'))
+    return(0)
+
+print("Loading you litte shit")
+print(deviceInfo('192.168.1.7'))

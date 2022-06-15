@@ -33,3 +33,7 @@ def sndMessage(b_message):
          to='+13235097091'
      )
 sndMessage('hello')
+
+def capPackets(count):
+    capture = sniff(pac_Number = count)
+    capture.summary()

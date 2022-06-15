@@ -7,6 +7,8 @@ from scapy.all import sniff
 #Editing via Github browser
 # Imports are Connections.py file
 import Connections
+# for finding device Info
+import fingerPrintDevice
 
 # Find your Account SID and Auth Token at twilio.com/console
 # and set the environment variables. See http://twil.io/secure

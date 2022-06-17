@@ -22,8 +22,22 @@ from __future__ import print_function
 from scapy.all import *
 import time
 from fingerPrintDevice import deviceInfo
+from SeniorProject import sndMessage
 
 __version__ = "0.0.3"
+
+# print(f"Host {hostname} ({packet[Ether].src}) requested {requested_addr}")
+
+#format_info pretties up DeviceName, Mac Address, IP Address, and Open Ports from ELSEIF REQUEST PACKET.
+def format_info(host_name, mac_name,ip):
+    host = host_name
+    mac_address = mac_name
+    ip_address = ip
+    open_ports = ""
+    version_info = ""
+
+    return ("Host Name:" + host + "\n" + "Mac Address:" + mac_address + "\n" + "IP Address:" + ip_address + "\n" + "Open Ports:" + open_ports + "\n" + "Version:" + version_info)
+
 
 # Fixup function to extract dhcp_options by key
 def get_option(dhcp_options, key):
@@ -48,7 +62,7 @@ def get_option(dhcp_options, key):
 
 def handle_dhcp_packet(packet):
 
-    # Match DHCP discover
+    # Match DHCP DISCOVER PACKET
     if DHCP in packet and packet[DHCP].options[0][1] == 1:
         print('---')
         print('New DHCP Discover')
@@ -58,7 +72,7 @@ def handle_dhcp_packet(packet):
         print(f"Host {hostname} ({packet[Ether].src}) asked for an IP")
 
 
-    # Match DHCP offer
+    # Match DHCP OFFER PACKET
     elif DHCP in packet and packet[DHCP].options[0][1] == 2:
         print('---')
         print('New DHCP Offer')
@@ -77,7 +91,7 @@ def handle_dhcp_packet(packet):
               f"domain: {domain}")
 
 
-    # Match DHCP request
+    # Match DHCP REQUEST PACKET
     elif DHCP in packet and packet[DHCP].options[0][1] == 3:
         print('---')
         print('New DHCP Request')
@@ -90,32 +104,34 @@ def handle_dhcp_packet(packet):
         time.sleep(5)
         print(deviceInfo(str(requested_addr)))
         print("Scanninf Done Bitch!!")
-        print(f"Host {hostname} ({packet[Ether].src}) requested {requested_addr}")
+        print(f"Host {hostname} ({packet[Ether].src}) requested {requested_addr}")  #hostname = hostname, packet[Ether].src = mac address, requested_addr = ip address
+        text_message = format_info(str(hostname),str(packet[Ether].src), str(requested_addr))
+        sndMessage(text_message)
 
+    # Match DHCP ACK PACKET
+        
+        # elif DHCP in packet and packet[DHCP].options[0][1] == 5:
+        # print('---')
+        # print('New DHCP Ack')
 
-    # Match DHCP ack
-    elif DHCP in packet and packet[DHCP].options[0][1] == 5:
-        print('---')
-        print('New DHCP Ack')
+        # subnet_mask = get_option(packet[DHCP].options, 'subnet_mask')
+        # lease_time = get_option(packet[DHCP].options, 'lease_time')
+        # router = get_option(packet[DHCP].options, 'router')
+        # name_server = get_option(packet[DHCP].options, 'name_server')
+        # ## TODO
+        # ## Lets edit this to scan for the IP
+        # print("Loading you litte shit\nSacnning ...",str(packet[BOOTP].yiaddr))
+        # time.sleep(5)
+        # print(deviceInfo(str(packet[BOOTP].yiaddr)))
+        # print("Scanninf Done Bitch!!")
 
-        subnet_mask = get_option(packet[DHCP].options, 'subnet_mask')
-        lease_time = get_option(packet[DHCP].options, 'lease_time')
-        router = get_option(packet[DHCP].options, 'router')
-        name_server = get_option(packet[DHCP].options, 'name_server')
-        ## TODO
-        ## Lets edit this to scan for the IP
-        print("Loading you litte shit\nSacnning ...",str(packet[BOOTP].yiaddr))
-        time.sleep(5)
-        print(deviceInfo(str(packet[BOOTP].yiaddr)))
-        print("Scanninf Done Bitch!!")
+        # print(f"DHCP Server {packet[IP].src} ({packet[Ether].src}) "
+        #       f"acked {packet[BOOTP].yiaddr}")
 
-        print(f"DHCP Server {packet[IP].src} ({packet[Ether].src}) "
-              f"acked {packet[BOOTP].yiaddr}")
-
-        print(f"DHCP Options: subnet_mask: {subnet_mask}, lease_time: "
-              f"{lease_time}, router: {router}, name_server: {name_server}")
-
-    # Match DHCP inform
+        # print(f"DHCP Options: subnet_mask: {subnet_mask}, lease_time: "
+        #       f"{lease_time}, router: {router}, name_server: {name_server}")
+        
+    # Match DHCP INFORM PACKET
     elif DHCP in packet and packet[DHCP].options[0][1] == 8:
         print('---')
         print('New DHCP Inform')

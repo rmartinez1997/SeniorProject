@@ -11,5 +11,5 @@ def prettyString(dInfo):
     #Ricardo
     return(0)
 
-print("Loading you litte shit")
-print(deviceInfo('192.168.1.7'))
+# print("Loading you litte shit")
+# print(deviceInfo('192.168.1.22'))

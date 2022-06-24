@@ -5,11 +5,7 @@ def deviceInfo(ipAddress):
     nm = nmap.PortScanner()
     nm.scan(ipAddress, arguments='-Pn -O -sV -A')
     return (nm.csv())
-# You can change this IP to anything for now
-def prettyString(dInfo):
-    #TODO 
-    #Ricardo
-    return(0)
 
-# print("Loading you litte shit")
-# print(deviceInfo('192.168.1.22'))
+# print("IDS is loading")
+#For debugging purposes
+#print(deviceInfo('192.168.1.22'))
